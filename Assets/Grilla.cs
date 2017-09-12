@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Grilla : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+	public LayerMask pasoNoPermitidoMask;
+	public Vector2 grillaSize;
+	public float radioNodo;
+	Nodo[,] grilla;
 	
-	// Update is called once per frame
-	void Update () {
-		
+	void OnDrawGizmos(){
+		Gizmos.DrawWireCube(transform.position, new Vector3(grillaSize.x,1,grillaSize.y));
 	}
 }

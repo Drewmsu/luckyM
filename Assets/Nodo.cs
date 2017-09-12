@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nodo : MonoBehaviour {
+public class Nodo {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public Vector3 posGeneral;
+	public bool pasoPermitido;
+
+	public Nodo(bool _pasoPermitido, Vector3 _posGeneral){
+		pasoPermitido = _pasoPermitido;
+		posGeneral = _posGeneral;
 	}
 }
