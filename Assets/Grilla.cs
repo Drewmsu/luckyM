@@ -7,7 +7,7 @@ public class Grilla : MonoBehaviour {
 	public LayerMask pasoNoPermitidoMask;
 	public Vector2 grillaGeneralSize;
 	public float radioNodo;
-	//public Transform player; //Test 1
+
 	Nodo[,] grilla;
 
 	float diametroNodo;
@@ -35,19 +35,19 @@ public class Grilla : MonoBehaviour {
 		}
 	}
 
-	public List<Nodo> GetAbyacentes(Nodo nodo){
+	public List<Nodo> GetAbyacentes(Nodo nodo) {
 		List<Nodo> abyacentes = new List<Nodo>();
 
-		for (int i = -1; i <= 1; i ++) {
-			for (int j = -1; j <= 1; j ++) {
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
 				if (i == 0 && j == 0) continue;
 
-				int verX = nodo.grillaX + i;
+			 	int verX = nodo.grillaX + i;
 				int verY = nodo.grillaY + j;
 				
 				if (verX >= 0 && verX < grillaSizeX &&
 					verY >= 0 && verY < grillaSizeY) { 
-						abyacentes.Add(grilla[verX,verY]);
+						abyacentes.Add(grilla[verX, verY]);
 					}
 			}
 		}
@@ -55,7 +55,7 @@ public class Grilla : MonoBehaviour {
 	}
 
 	public Nodo NodoEnMapa(Vector3 posGeneral){
-		/*float porcentajeX = (posGeneral.x + grillaGeneralSize.x/2) / grillaGeneralSize.x;
+		float porcentajeX = (posGeneral.x + grillaGeneralSize.x/2) / grillaGeneralSize.x;
 		float porcentajeY =  (posGeneral.z + grillaGeneralSize.y/2) / grillaGeneralSize.y;
 
 		porcentajeX = Mathf.Clamp01(porcentajeX);
@@ -64,8 +64,8 @@ public class Grilla : MonoBehaviour {
 		int x = Mathf.RoundToInt((grillaSizeX - 1) * porcentajeX);
 		int y = Mathf.RoundToInt((grillaSizeY - 1) * porcentajeY);
 
-		return grilla[x, y];*/
-		float porcentajeX = (posGeneral.x) / grillaGeneralSize.x;
+		return grilla[x, y];
+		/*float porcentajeX = (posGeneral.x) / grillaGeneralSize.x;
   		float porcentajeY = (posGeneral.z) / grillaGeneralSize.y;
   		porcentajeX = Mathf.Clamp01(porcentajeX);
   		porcentajeY = Mathf.Clamp01(porcentajeY);
@@ -73,17 +73,20 @@ public class Grilla : MonoBehaviour {
 		int x = Mathf.RoundToInt((grillaSizeX - 1) * porcentajeX);
 		int y = Mathf.RoundToInt((grillaSizeY - 1) * porcentajeY);
 
-		return grilla[x,y];
+		return grilla[x,y];*/
 	}
 
+	public List<Nodo> camino; //Test 2
 	void OnDrawGizmos(){
 		Gizmos.DrawWireCube(transform.position, new Vector3(grillaGeneralSize.x, 1, grillaGeneralSize.y));
 
 		if(grilla != null){
-			//Nodo nodoPlayer = NodoEnMapa(player.position); //Test 1
+
 			foreach (Nodo n in grilla){
 				Gizmos.color = (n.pasoPermitido)?Color.white:Color.green;
-				//if(nodoPlayer == n ) Gizmos.color = Color.red; //Test 1
+				if (camino != null) //Test 2
+					if (camino.Contains(n)) //Test 2
+						Gizmos.color = Color.black; //Test 2
 				Gizmos.DrawCube(n.posGeneral, Vector3.one * (diametroNodo - 0.1f));
 			}
 		}

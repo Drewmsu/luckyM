@@ -8,11 +8,9 @@ public class Nodo {
 	public bool pasoPermitido;
 	public int grillaX;
 	public int grillaY;
-
+	public Nodo padre;
 	public int costoG;
-
-	//En este caso se usara Manhatan
-	public int costoH; 
+	public int costoH; //En este caso se usara Manhatan 
 
 	public Nodo(bool _pasoPermitido, Vector3 _posGeneral, int _grillaX, int _grillaY) {
 		pasoPermitido = _pasoPermitido;
@@ -22,6 +20,6 @@ public class Nodo {
 	}
 
 	public int costoF {
-		get{ return costoG + costoH; }
+		get { return costoG + costoH; }
 	}
 }
