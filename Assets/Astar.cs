@@ -19,7 +19,20 @@ public class Astar : MonoBehaviour {
 		listaAbierta.Add(nodoInicio);
 
 		while(listaAbierta.Count > 0){
+			Nodo nodoActual = listaAbierta[0];
+			for(int i = 1; i < listaAbierta.Count; i++){
+				if(listaAbierta[i].costoF < nodoActual.costoF || listaAbierta[i].costoF == nodoActual.costoF && listaAbierta[i].costoH < nodoActual.costoH) {
+					nodoActual = listaAbierta[i];
+				}
+			}
+
+			listaAbierta.Remove(nodoActual);
+			listaCerrada.Add(nodoActual);
+
+			if(nodoActual == nodoObjetivo) return;
+
 			
+
 		}
 	}
 	

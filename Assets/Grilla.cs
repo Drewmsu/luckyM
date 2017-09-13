@@ -30,9 +30,28 @@ public class Grilla : MonoBehaviour {
 				Vector3 puntoMapa = bottomLeft + Vector3.right * (i * diametroNodo + radioNodo) + 
 									Vector3.forward * (j * diametroNodo + radioNodo);
 				bool pasoPermitido = !(Physics.CheckSphere(puntoMapa, radioNodo, pasoNoPermitidoMask));
-				grilla[i, j] = new Nodo(pasoPermitido, puntoMapa);
+				grilla[i, j] = new Nodo(pasoPermitido, puntoMapa, i, j);
 			}
 		}
+	}
+
+	public List<Nodo> GetAbyacentes(Nodo nodo){
+		List<Nodo> abyacentes = new List<Nodo>();
+
+		for (int i = -1; i <= 1; i ++) {
+			for (int j = -1; j <= 1; j ++) {
+				if (i == 0 && j == 0) continue;
+
+				int verX = nodo.grillaX + i;
+				int verY = nodo.grillaY + j;
+				
+				if (verX >= 0 && verX < grillaSizeX &&
+					verY >= 0 && verY < grillaSizeY) { 
+						abyacentes.Add(grilla[verX,verY]);
+					}
+			}
+		}
+		return abyacentes;
 	}
 
 	public Nodo NodoEnMapa(Vector3 posGeneral){
