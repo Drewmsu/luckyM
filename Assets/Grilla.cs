@@ -55,7 +55,7 @@ public class Grilla : MonoBehaviour {
 	}
 
 	public Nodo NodoEnMapa(Vector3 posGeneral){
-		float porcentajeX = (posGeneral.x + grillaGeneralSize.x/2) / grillaGeneralSize.x;
+		/*float porcentajeX = (posGeneral.x + grillaGeneralSize.x/2) / grillaGeneralSize.x;
 		float porcentajeY =  (posGeneral.z + grillaGeneralSize.y/2) / grillaGeneralSize.y;
 
 		porcentajeX = Mathf.Clamp01(porcentajeX);
@@ -64,7 +64,16 @@ public class Grilla : MonoBehaviour {
 		int x = Mathf.RoundToInt((grillaSizeX - 1) * porcentajeX);
 		int y = Mathf.RoundToInt((grillaSizeY - 1) * porcentajeY);
 
-		return grilla[x, y];
+		return grilla[x, y];*/
+		float porcentajeX = (posGeneral.x) / grillaGeneralSize.x;
+  		float porcentajeY = (posGeneral.z) / grillaGeneralSize.y;
+  		porcentajeX = Mathf.Clamp01(porcentajeX);
+  		porcentajeY = Mathf.Clamp01(porcentajeY);
+
+		int x = Mathf.RoundToInt((grillaSizeX - 1) * porcentajeX);
+		int y = Mathf.RoundToInt((grillaSizeY - 1) * porcentajeY);
+
+		return grilla[x,y];
 	}
 
 	void OnDrawGizmos(){

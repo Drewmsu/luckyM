@@ -29,11 +29,28 @@ public class Astar : MonoBehaviour {
 			listaAbierta.Remove(nodoActual);
 			listaCerrada.Add(nodoActual);
 
-			if(nodoActual == nodoObjetivo) return;
+			if(nodoActual == nodoObjetivo) {
+				return;
+			}
 
-			
+			foreach	(Nodo abyacente in grilla.GetAbyacentes(nodoActual)) {
+				if (!abyacente.pasoPermitido || listaCerrada.Contains(abyacente)) continue;
 
+				int nuevoCostoMovAbyacente = nodoActual.costoG + GetDistancia(nodoActual, abyacente);
+				if (nuevoCostoMovAbyacente < abyacente.costoG || !listaAbierta.Contains(abyacente)) {
+					abyacente.costoG = nuevoCostoMovAbyacente;
+					abyacente.costoH = GetDistancia(abyacente, nodoObjetivo);
+				}
+			}
 		}
 	}
 	
+	int GetDistancia (Nodo nodoA, Nodo nodoB) {
+		int dX = Mathf.Abs(nodoA.grillaX - nodoB.grillaX);
+		int dY = Mathf.Abs(nodoA.grillaY - nodoB.grillaY);
+
+		if (dX > dY)
+			return 14 * dY + 10 * (dX - dY);
+		return 14 * dX + 10 * (dY - dX);
+	}
 }
