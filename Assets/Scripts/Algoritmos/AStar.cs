@@ -70,6 +70,7 @@ public class AStar : MonoBehaviour {
 		camino.Reverse(); //Reverse invierte la lista de nodos para obtener el camino en el orden correcto
 
 		grilla.camino = camino;
+		Buscador.camino = camino;
 	}
 	
 	int GetDistancia (Nodo nodoA, Nodo nodoB) {

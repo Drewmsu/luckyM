@@ -7,29 +7,42 @@ public class Grilla : MonoBehaviour {
 	public LayerMask pasoNoPermitidoMask;
 	public Vector2 grillaGeneralSize;
 	public float radioNodo;
+	public List<Nodo> camino; //Test 2
 
-	Nodo[,] grilla;
+	Nodo[,] grilla = null;
 
 	float diametroNodo;
 	int grillaSizeX, grillaSizeY;
 
-	void Start(){
+	void Awake(){
 		diametroNodo = radioNodo * 2;
 		grillaSizeX = Mathf.RoundToInt(grillaGeneralSize.x / diametroNodo);
 		grillaSizeY = Mathf.RoundToInt(grillaGeneralSize.y / diametroNodo);
 		CrearGrilla ();
 	}
 
+	public Vector3 getPuntoMapa(int x, int y) {
+		Vector3 bottomLeft = transform.position - Vector3.right * grillaGeneralSize.x/2 - Vector3.forward * grillaGeneralSize.y/2; 
+
+		Vector3 puntoMapa = bottomLeft + Vector3.right * (x * diametroNodo + radioNodo) + 
+							Vector3.forward * (y * diametroNodo + radioNodo);
+
+		return puntoMapa;
+	}
+
+	public bool esPermitido(Vector3 puntoMapa) {
+		return !(Physics.CheckSphere(puntoMapa, radioNodo, pasoNoPermitidoMask));
+	}
+
+
 	void CrearGrilla(){
 		grilla = new Nodo[grillaSizeX, grillaSizeY];
-		//position = centro del mapa
-		Vector3 bottomLeft = transform.position - Vector3.right * grillaGeneralSize.x/2 - Vector3.forward * grillaGeneralSize.y/2; 
 		
 		for (int i = 0; i < grillaSizeX; i++){
 			for (int j = 0; j < grillaSizeY; j++){
-				Vector3 puntoMapa = bottomLeft + Vector3.right * (i * diametroNodo + radioNodo) + 
-									Vector3.forward * (j * diametroNodo + radioNodo);
-				bool pasoPermitido = !(Physics.CheckSphere(puntoMapa, radioNodo, pasoNoPermitidoMask));
+				Vector3 puntoMapa = getPuntoMapa(i, j);
+
+				bool pasoPermitido = esPermitido(puntoMapa);
 				grilla[i, j] = new Nodo(pasoPermitido, puntoMapa, i, j);
 			}
 		}
@@ -37,6 +50,16 @@ public class Grilla : MonoBehaviour {
 
 	public List<Nodo> GetAbyacentes(Nodo nodo) {
 		List<Nodo> abyacentes = new List<Nodo>();
+		bool obstaculoEnEjes = false;
+
+		if (
+			!esPermitido(getPuntoMapa(nodo.grillaX - 1, nodo.grillaY)) ||
+			!esPermitido(getPuntoMapa(nodo.grillaX + 1, nodo.grillaY)) ||
+			!esPermitido(getPuntoMapa(nodo.grillaX, nodo.grillaY - 1)) ||
+			!esPermitido(getPuntoMapa(nodo.grillaX, nodo.grillaY + 1))
+		) {
+			obstaculoEnEjes = true;
+		}
 
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -44,10 +67,16 @@ public class Grilla : MonoBehaviour {
 
 			 	int verX = nodo.grillaX + i;
 				int verY = nodo.grillaY + j;
-				
+
 				if (verX >= 0 && verX < grillaSizeX &&
-					verY >= 0 && verY < grillaSizeY) { 
-						abyacentes.Add(grilla[verX, verY]);
+					verY >= 0 && verY < grillaSizeY) {
+						if ((Mathf.Abs(i) == Mathf.Abs(j))) { // Diagonal,
+							if  (!obstaculoEnEjes) {
+								abyacentes.Add(grilla[verX, verY]);
+							}
+						} else {
+							abyacentes.Add(grilla[verX, verY]);
+						}
 					}
 			}
 		}
@@ -76,7 +105,6 @@ public class Grilla : MonoBehaviour {
 		return grilla[x,y];*/
 	}
 
-	public List<Nodo> camino; //Test 2
 	void OnDrawGizmos(){
 		Gizmos.DrawWireCube(transform.position, new Vector3(grillaGeneralSize.x, 1, grillaGeneralSize.y));
 
