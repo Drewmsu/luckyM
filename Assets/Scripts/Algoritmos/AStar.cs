@@ -19,7 +19,7 @@ public class AStar : MonoBehaviour {
 		Nodo nodoInicio = grilla.NodoEnMapa(posInicial);
 		Nodo nodoObjetivo = grilla.NodoEnMapa(posObjetivo);
 
-		if(nodoInicio.pasoPermitido && nodoObjetivo.pasoPermitido) {
+		if(nodoObjetivo.pasoPermitido) {
 			List<Nodo> listaAbierta = new List<Nodo>();
 			HashSet<Nodo> listaCerrada = new HashSet<Nodo>();
 
