@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Escenas/DibujarCamino.unity
+    guid: 1ca9b4da2025f9c4c8e1e42c2d21b60a
