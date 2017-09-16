@@ -20,8 +20,8 @@ Deberás escapar del troll que te persigue.
 
 ## Creadores
 
--Francis Márquez
--Hugo Rosado
+- Francis Márquez
+- Hugo Rosado
 
 
 *Nota: modelos 3D obtenidos de Unity asset store*
