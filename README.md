@@ -16,6 +16,6 @@ Deberás escapar del troll que te persigue.
 
 ## Capacidad de los bots
 
-- Detectar tu posición y encontrar el camino mas corto hacia donde te encuentras - *AStar* [*(Ver codigo)*] (https://github.com/Drewmsu/luckyM/blob/master/Assets/Scripts/Algorithms/AStar.cs)
+- Detectar tu posición y encontrar el camino mas corto hacia donde te encuentras - *AStar* [*(Ver codigo)*](https://github.com/Drewmsu/luckyM/blob/master/Assets/Scripts/Algorithms/AStar.cs)
 
 *Nota: modelos 3D obtenidos de Unity asset store*
